@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Simple House</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet" />
+  <link href="{% static 'css/templatemo-style.css' %}" rel="stylesheet" />
+
+  <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}" />
+</head>
+<!--
+
+Simple House
+
+https://templatemo.com/tm-539-simple-house
+
+-->
+
+<body>
+  <div class="container">
+    <!-- Top box -->
+    <!-- Logo & Site Name -->
+    <div class="placeholder">
+      <div class="parallax-window" data-parallax="scroll" data-image-src="{% static 'img/simple-house-01.jpg' %}">
+        <div class="tm-header">
+          <div class="row tm-header-inner">
+            <div class="col-md-6 col-12">
+              <img src="{% static 'img/simple-house-logo.png' %}" alt="Logo" class="tm-site-logo" />
+              <div class="tm-site-text-box">
+                <h1 class="tm-site-title">Simple House</h1>
+                <h6 class="tm-site-description">Comida das boas e das mió</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <header class="row tm-welcome-section">
+        <h2 class="col-12 text-center tm-section-title">
+          Sejam bem vindos à Simple House
+        </h2>
+        <p class="col-12 text-center">
+          Somos especializados em massas, saladas e pizzas. O melhor restaurante eleito pelo
+          prêmio Trófeu Comida Boa por 10 anos consecutivos.
+        </p>
+      </header>
+
+      <div class="tm-paging-links">
+        <nav>
+          <ul>
+
+            {% for category in categories %}
+            <li class="tm-paging-item">
+              <a href="#" class="tm-paging-link">{{category.name}}</a>
+            </li>
+            {% endfor %}
+
+
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Gallery -->
+      <div class="row tm-gallery">
+
+        {% for category in categories %}
+        <div id="tm-gallery-page-{{category.name|lower}}" class="tm-gallery-page">
+
+          {% for food in foods %}
+          {% if food.category.id == category.id %}
+          <article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
+            <figure>
+              <img src="{{food.photo}}" alt="Image" class="img-fluid tm-gallery-img" />
+              <figcaption>
+                <h4 class="tm-gallery-title">{{food.name}}</h4>
+                <p class="tm-gallery-description">
+                  {{food.description}}
+                </p>
+                <p class="tm-gallery-price">{{food.formatted_price}}</p>
+              </figcaption>
+            </figure>
+          </article>
+          {% endif %}
+          {% endfor %}
+
+        </div>
+        {% endfor %}
+
+      </div>
+    </main>
+
+    <footer class="tm-footer text-center">
+      <p>
+        Copyright &copy; 2021 Rango Jat | Design:
+        <a rel="nofollow" href="https://templatemo.com">TemplateMo</a>
+      </p>
+    </footer>
+  </div>
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/parallax.min.js' %}"></script>
+  <script>
+    $(document).ready(function () {
+      // Handle click on paging links
+      $(".tm-paging-link").click(function (e) {
+        e.preventDefault();
+
+        var page = $(this).text().toLowerCase();
+        $(".tm-gallery-page").addClass("hidden");
+        $("#tm-gallery-page-" + page).removeClass("hidden");
+        $(".tm-paging-link").removeClass("active");
+        $(this).addClass("active");
+      });
+    });
+  </script>
+</body>
+
+</html>
